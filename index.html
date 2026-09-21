@@ -7,32 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 科技感开屏动画 -->
     <div id="splash-screen" class="splash-screen">
         <div class="splash-content">
-            <div class="tech-ring">
-                <div class="ring ring-1"></div>
-                <div class="ring ring-2"></div>
-                <div class="ring ring-3"></div>
-            </div>
             <div class="splash-logo">
                 <span class="logo-text">APEX</span>
-                <span class="logo-sub">辅助</span>
             </div>
-            <div class="tech-loader">
-                <div class="loader-line">
-                    <div class="loader-progress"></div>
-                </div>
-                <div class="loader-percent">0%</div>
-                <div class="loader-text">INITIALIZING SYSTEM...</div>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
             </div>
-            <div class="tech-corners">
-                <div class="corner tl"></div>
-                <div class="corner tr"></div>
-                <div class="corner bl"></div>
-                <div class="corner br"></div>
-            </div>
-            <div class="scan-line"></div>
         </div>
     </div>
 
@@ -49,11 +31,8 @@
         </header>
 
         <section id="home" class="hero">
-            <h1 class="hero-title"><span class="title-rotate">Apex官方网站</span><span class="title-rotate">游戏辅助平台</span><span class="title-rotate">您的首选</span></h1>
+            <h1>欢迎来到 Apex</h1>
             <p>发现精选商品，体验极致品质</p>
-            <div class="hero-dynamic">
-                <span class="typing-text">Apex辅助官网</span><span class="cursor">|</span>
-            </div>
         </section>
 
         <section id="products" class="products-section">
@@ -65,10 +44,10 @@
                             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                 <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="currentColor" stroke-width="2"/>
                                 <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" fill="currentColor" opacity="0.3"/>
-                                <text x="50" y="55" text-anchor="middle" fill="currentColor" font-size="20" font-weight="bold">永</text>
+                                <text x="50" y="55" text-anchor="middle" fill="currentColor" font-size="20" font-weight="bold">A</text>
                             </svg>
                         </div>
-                        <div class="product-badge">永久</div>
+                        <div class="product-badge">新品</div>
                     </div>
                     <div class="product-info">
                         <h3>Apex永久</h3>
@@ -95,7 +74,7 @@
                         <h3>Apex月卡</h3>
                         <p class="product-desc">Apex是一款网易版mc最顶级的游戏辅助</p>
                         <div class="product-price">
-                            <span class="price">¥31.00</span>
+                            <span class="price">¥36.00</span>
                         </div>
                         <a id="pay-btn-monthly" class="add-to-cart" href="javascript:void(0)">立即付款</a>
                     </div>
@@ -116,7 +95,7 @@
                         <h3>Apex季卡</h3>
                         <p class="product-desc">Apex是一款网易版mc最顶级的游戏辅助</p>
                         <div class="product-price">
-                            <span class="price">¥36.00</span>
+                            <span class="price">¥99.00</span>
                         </div>
                         <a id="pay-btn-season" class="add-to-cart" href="javascript:void(0)">立即付款</a>
                     </div>
@@ -131,6 +110,22 @@
             </div>
         </section>
 
+        <section id="qq-group" class="qq-group-section">
+            <div class="container">
+                <h2>加入 QQ 交流群</h2>
+                <p>与玩家交流心得，获取最新资讯，售后技术支持</p>
+                <a id="qq-group-btn" class="qq-group-btn" href="javascript:void(0)">
+                    <svg class="qq-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm2.236-12.55c-.317.133-.637.263-.959.393l-3.552 1.489c-.889.373-1.332 1.311-1.332 2.179v3.433c0 .76.335 1.519.854 2.021l-1.404 2.005c-.428.611-.26 1.375.424 1.753.207.113.423.207.648.282.306.107.615.16 1.093.16.685 0 1.252-.28 1.307-.66.143-1 1.467-1.787 2.64-1.797l1.53-.013c1.194-.011 2.138.954 2.307 2.088.036.238.053.474.053.712v1.96c0 .379-.328.69-.716.703-4.098.14-7.672-3.067-8.357-7.074a7.947 7.947 0 01.708-2.572c.08-.323.37-.587.7-.63l3.318-.446c.295-.039.552-.25.62-.538.06-.256-.073-.523-.322-.595-2.14-.62-3.756-2.57-3.756-4.792 0-3.143 2.554-5.692 5.695-5.692 1.545 0 2.97.617 4.012 1.588.12.112.274.168.43.168.156 0 .31-.056.43-.168C18.446 6.9 19.87 6.284 21.415 5.664c.31-.061.587-.326.65-.637.057-.28-.076-.565-.35-.625-2.32-.48-4.725-.73-7.155-.73z"/>
+                    </svg>
+                    <span>点击加入 QQ 交流群</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
         <footer class="footer">
             <p>&copy; 2026 Apex. 版权所有.</p>
         </footer>
@@ -138,21 +133,9 @@
 
     <script src="script.js"></script>
     <script>
-    // 支付链接配置 - 每个商品单独配置
-    const PAY_LINKS = {
-        'pay-btn-forever': {
-            wx: 'wxp://f2f0o9oP5w9hNerObN5YNX_z5dZ2W4bsfyknuuMjbF9PoqU44ZbMIU35fx2aOrdpfWxe',
-            h5: 'https://ds.xiaoman.top/details/A236505C'
-        },
-        'pay-btn-monthly': {
-            wx: 'wxp://f2f0o9oP5w9hNerObN5YNX_z5dZ2W4bsfyknuuMjbF9PoqU44ZbMIU35fx2aOrdpfWxe',
-            h5: 'https://ds.xiaoman.top/details/6C069485'
-        },
-        'pay-btn-season': {
-            wx: 'wxp://f2f0o9oP5w9hNerObN5YNX_z5dZ2W4bsfyknuuMjbF9PoqU44ZbMIU35fx2aOrdpfWxe',
-            h5: 'https://ds.xiaoman.top/details/DD6791A7'
-        }
-    };
+    // 支付链接配置
+    const WX_PAY_LINK = "wxp://f2f0o9oP5w9hNerObN5YNX_z5dZ2W4bsfyknuuMjbF9PoqU44ZbMIU35fx2aOrdpfWxe";
+    const H5_PAY_LINK = "";
 
     function isWeixin() {
         return /MicroMessenger/i.test(navigator.userAgent);
@@ -162,13 +145,10 @@
         document.getElementById(btnId).addEventListener('click', function(e) {
             e.preventDefault();
             
-            const links = PAY_LINKS[btnId];
-            if (!links) return;
-            
             if (isWeixin()) {
-                window.location.href = links.wx;
-            } else if (links.h5) {
-                window.location.href = links.h5;
+                window.location.href = WX_PAY_LINK;
+            } else if (H5_PAY_LINK) {
+                window.location.href = H5_PAY_LINK;
             } else {
                 alert('请在微信中打开此页面完成支付，或联系客服获取支付链接。');
             }
@@ -181,4 +161,3 @@
     </script>
 </body>
 </html>
- 
