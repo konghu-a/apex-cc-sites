@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 科技感开屏动画 -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="tech-ring">
+                <div class="ring ring-1"></div>
+                <div class="ring ring-2"></div>
+                <div class="ring ring-3"></div>
+            </div>
+            <div class="splash-logo">
+                <span class="logo-text">APEX</span>
+                <span class="logo-sub">辅助</span>
+            </div>
+            <div class="tech-loader">
+                <div class="loader-line">
+                    <div class="loader-progress"></div>
+                </div>
+                <div class="loader-percent">0%</div>
+                <div class="loader-text">INITIALIZING SYSTEM...</div>
+            </div>
+            <div class="tech-corners">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+            </div>
+            <div class="scan-line"></div>
+        </div>
+    </div>
+
+    <div id="main-content" class="main-content hidden">
+        <header class="header">
+            <nav class="navbar">
+                <div class="logo">APEX</div>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#products">商品</a></li>
+                    <li><a href="#about">关于</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="home" class="hero">
+            <h1 class="hero-title"><span class="title-rotate">Apex官方网站</span><span class="title-rotate">游戏辅助平台</span><span class="title-rotate">您的首选</span></h1>
+            <p>发现精选商品，体验极致品质</p>
+            <div class="hero-dynamic">
+                <span class="typing-text">Apex辅助官网</span><span class="cursor">|</span>
+            </div>
+        </section>
+
+        <section id="products" class="products-section">
+            <h2>精选商品</h2>
+            <div class="products-grid">
+                <div class="product-card" data-product="apex">
+                    <div class="product-image">
+                        <div class="product-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" fill="currentColor" opacity="0.3"/>
+                                <text x="50" y="55" text-anchor="middle" fill="currentColor" font-size="20" font-weight="bold">永</text>
+                            </svg>
+                        </div>
+                        <div class="product-badge">永久</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Apex永久</h3>
+                        <p class="product-desc">Apex是一款网易版mc最顶级的游戏辅助</p>
+                        <div class="product-price">
+                            <span class="price">¥46.00</span>
+                        </div>
+                        <a id="pay-btn-forever" class="add-to-cart" href="javascript:void(0)">立即付款</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-product="apex-monthly">
+                    <div class="product-image">
+                        <div class="product-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" fill="currentColor" opacity="0.3"/>
+                                <text x="50" y="55" text-anchor="middle" fill="currentColor" font-size="20" font-weight="bold">月</text>
+                            </svg>
+                        </div>
+                        <div class="product-badge">月卡</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Apex月卡</h3>
+                        <p class="product-desc">Apex是一款网易版mc最顶级的游戏辅助</p>
+                        <div class="product-price">
+                            <span class="price">¥31.00</span>
+                        </div>
+                        <a id="pay-btn-monthly" class="add-to-cart" href="javascript:void(0)">立即付款</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-product="apex-season">
+                    <div class="product-image">
+                        <div class="product-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" fill="currentColor" opacity="0.3"/>
+                                <text x="50" y="55" text-anchor="middle" fill="currentColor" font-size="20" font-weight="bold">季</text>
+                            </svg>
+                        </div>
+                        <div class="product-badge">季卡</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Apex季卡</h3>
+                        <p class="product-desc">Apex是一款网易版mc最顶级的游戏辅助</p>
+                        <div class="product-price">
+                            <span class="price">¥36.00</span>
+                        </div>
+                        <a id="pay-btn-season" class="add-to-cart" href="javascript:void(0)">立即付款</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>关于 Apex</h2>
+                <p>Apex作为一款全新的项目拥有精美的UI和超多的功能并且适配网易版我的世界最新版本并且售后也是一流的不解决问题会耐心讲解直到学会为止</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2026 Apex. 版权所有.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+    // 支付链接配置 - 每个商品单独配置
+    const PAY_LINKS = {
+        'pay-btn-forever': {
+            wx: 'wxp://f2f0o9oP5w9hNerObN5YNX_z5dZ2W4bsfyknuuMjbF9PoqU44ZbMIU35fx2aOrdpfWxe',
+            h5: 'https://ds.xiaoman.top/details/A236505C'
+        },
+        'pay-btn-monthly': {
+            wx: 'wxp://f2f0o9oP5w9hNerObN5YNX_z5dZ2W4bsfyknuuMjbF9PoqU44ZbMIU35fx2aOrdpfWxe',
+            h5: 'https://ds.xiaoman.top/details/6C069485'
+        },
+        'pay-btn-season': {
+            wx: 'wxp://f2f0o9oP5w9hNerObN5YNX_z5dZ2W4bsfyknuuMjbF9PoqU44ZbMIU35fx2aOrdpfWxe',
+            h5: 'https://ds.xiaoman.top/details/DD6791A7'
+        }
+    };
+
+    function isWeixin() {
+        return /MicroMessenger/i.test(navigator.userAgent);
+    }
+
+    function setupPayButton(btnId) {
+        document.getElementById(btnId).addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const links = PAY_LINKS[btnId];
+            if (!links) return;
+            
+            if (isWeixin()) {
+                window.location.href = links.wx;
+            } else if (links.h5) {
+                window.location.href = links.h5;
+            } else {
+                alert('请在微信中打开此页面完成支付，或联系客服获取支付链接。');
+            }
+        });
+    }
+
+    setupPayButton('pay-btn-forever');
+    setupPayButton('pay-btn-monthly');
+    setupPayButton('pay-btn-season');
+    </script>
+</body>
+</html>
