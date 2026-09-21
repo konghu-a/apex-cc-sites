@@ -822,3 +822,95 @@ body {
     90% { opacity: 0.6; }
     100% { transform: translateY(-100px) scale(1); opacity: 0; }
 }
+
+/* QQ 群组区域 */
+.qq-group-section {
+    padding: 80px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.qq-group-section .container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.qq-group-section h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #ff6b35, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.qq-group-section p {
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 40px;
+    font-size: 16px;
+}
+
+.qq-group-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #00A8FF, #0066CC);
+    border-radius: 50px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 168, 255, 0.3);
+    animation: qqPulse 2s ease-in-out infinite;
+}
+
+@keyframes qqPulse {
+    0%, 100% {
+        box-shadow: 0 10px 30px rgba(0, 168, 255, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 15px 40px rgba(0, 168, 255, 0.5);
+        transform: scale(1.02);
+    }
+}
+
+.qq-group-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 168, 255, 0.5);
+}
+
+.qq-group-btn:active {
+    transform: scale(0.98);
+}
+
+.qq-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.arrow-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.qq-group-btn:hover .arrow-icon {
+    transform: translateX(4px);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .qq-group-btn {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+    
+    .qq-group-section h2 {
+        font-size: 26px;
+    }
+}
