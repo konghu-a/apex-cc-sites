@@ -914,3 +914,50 @@ body {
         font-size: 26px;
     }
 }
+
+/* logo spin 动画 */
+.spin-anim {
+    animation: logoReveal 1.5s ease-out forwards,
+               logoGlow 3s ease-in-out infinite,
+               logoSpin 8s linear infinite !important;
+}
+
+@keyframes logoSpin {
+    0%   { transform: translateY(0) rotate(0deg) scale(1); }
+    25%  { transform: translateY(-8px) rotate(2deg) scale(1.02); }
+    50%  { transform: translateY(0) rotate(0deg) scale(1); }
+    75%  { transform: translateY(8px) rotate(-2deg) scale(0.98); }
+    100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* 光环旋转 */
+.spin-anim::before,
+.spin-anim::after {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    animation: ringOrbit 6s linear infinite;
+    pointer-events: none;
+}
+
+.spin-anim::before {
+    border-top-color: #00d4ff;
+    border-right-color: #00ff88;
+    inset: -15px;
+}
+
+.spin-anim::after {
+    border-bottom-color: #ff006e;
+    border-left-color: #00d4ff;
+    inset: -30px;
+    animation-duration: 10s;
+    animation-direction: reverse;
+}
+
+@keyframes ringOrbit {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
