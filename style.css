@@ -1091,3 +1091,177 @@ body {
     100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
 }
 
+
+/* ===== 碎裂重组开屏动画 - 新增关键帧 ===== */
+
+/* 初始隐藏字母 */
+.logo-text.shattered .letter {
+    opacity: 0;
+}
+
+/* 背景碎片飘散容器 */
+.shard-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bg-shard {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 107, 53, 0.7);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    opacity: 0;
+}
+
+@keyframes bgShardFloat {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translate(var(--sx), var(--sy)) rotate(180deg) scale(1);
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(calc(var(--sx) * 2), calc(var(--sy) * 2 + 300px)) rotate(360deg) scale(0.3);
+        opacity: 0;
+    }
+}
+
+/* Logo 碎裂阶段 - 字母从中心炸开 */
+@keyframes shardFlyOut {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.2);
+        opacity: 0;
+    }
+}
+
+/* Logo 重组阶段 - 碎片从四周飞回中心 */
+@keyframes shardReform {
+    0% {
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.2);
+        opacity: 0;
+        filter: blur(8px);
+    }
+    40% {
+        transform: translate(calc(var(--tx) * 0.1), calc(var(--ty) * 0.1)) rotate(calc(var(--rot) * 0.2)) scale(1.15);
+        opacity: 1;
+        filter: blur(2px);
+    }
+    60% {
+        transform: translate(-3px, 2px) rotate(-2deg) scale(0.96);
+    }
+    80% {
+        transform: translate(1px, -1px) rotate(1deg) scale(1.02);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* 粒子爆炸效果 */
+@keyframes particleBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by))) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Logo 故障闪烁进入 */
+@keyframes glitchIn {
+    0% {
+        clip-path: inset(40% 0 61% 0);
+        transform: translate(-2px, 2px);
+        opacity: 0;
+    }
+    20% {
+        clip-path: inset(92% 0 1% 0);
+        transform: translate(1px, -1px);
+        opacity: 1;
+    }
+    40% {
+        clip-path: inset(43% 0 1% 0);
+        transform: translate(-1px, 1px);
+    }
+    60% {
+        clip-path: inset(25% 0 58% 0);
+        transform: translate(2px, -2px);
+    }
+    80% {
+        clip-path: inset(55% 0 10% 0);
+        transform: translate(-1px, 0px);
+    }
+    100% {
+        clip-path: inset(0% 0 0% 0);
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+/* Logo 重组合成发光 */
+@keyframes logoGlow {
+    0% {
+        filter: drop-shadow(0 0 0px rgba(255, 107, 53, 0));
+        opacity: 0;
+    }
+    40% {
+        filter: drop-shadow(0 0 60px rgba(255, 107, 53, 1)) drop-shadow(0 0 120px rgba(255, 215, 0, 0.9));
+        opacity: 1;
+    }
+    70% {
+        filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.9));
+    }
+    100% {
+        filter: drop-shadow(0 0 30px rgba(255, 107, 53, 0.8));
+        opacity: 1;
+    }
+}
+
+/* 碎片漂浮微动 */
+@keyframes shardFloat {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-6px); }
+}
+
+/* 爆炸粒子 CSS 变量 */
+.burst-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffd700, #ff6b35);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Logo 文字重构类 */
+.logo-text.reforming .letter {
+    opacity: 0;
+}
+
+.logo-text.reformed .letter {
+    animation: glitchIn 0.6s ease-out forwards;
+}
+
+.logo-text.glow-flash .letter {
+    animation: glitchIn 0.6s ease-out forwards, logoGlow 1.5s ease-out 0.6s both;
+}
