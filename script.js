@@ -133,3 +133,25 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// QQ 交流群按钮点击
+document.getElementById('qq-group-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    showToast('正在跳转 QQ 交流群...');
+    window.location.href = 'https://qm.qq.com/q/FubhvX2X6y';
+});
+
+// 打字机效果
+document.addEventListener('DOMContentLoaded', function() {
+    const logoText = document.getElementById('logo-typed');
+    const text = 'APEX';
+    let index = 0;
+    
+    setTimeout(function type() {
+        if (index < text.length) {
+            logoText.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 200);
+        }
+    }, 500);
+});
