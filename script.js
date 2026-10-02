@@ -1,17 +1,16 @@
-// 开屏动画控制 - 碎裂重组版
+// 开屏动画控制 - 粒子蜂拥成字版
 document.addEventListener('DOMContentLoaded', function() {
     const splashScreen = document.getElementById('splash-screen');
     const mainContent = document.getElementById('main-content');
-    const logoText = document.querySelector('.logo-text');
-    const logoSub = document.querySelector('.logo-sub');
+    const particleTextContainer = document.getElementById('particle-text-container');
+    const targetText = particleTextContainer ? particleTextContainer.querySelector('.target-text') : null;
+    const targetSub = particleTextContainer ? particleTextContainer.querySelector('.target-sub') : null;
+    const logoSubDisplay = document.getElementById('logo-sub-display');
     const logoGlow = document.querySelector('.logo-glow');
     const loaderPercent = document.querySelector('.loader-percent');
     const loaderProgress = document.querySelector('.loader-progress');
     const logoScan = document.querySelector('.logo-scan');
-    const burstContainer = document.querySelector('.burst-container');
-    const rings = document.querySelectorAll('.splash-ring');
-    const particles = document.querySelectorAll('.particle');
-    const scanLine = document.querySelector('.scan-line');
+    const logoRing = document.querySelector('.logo-ring');
 
     // ========== 进度条百分比动画 ==========
     let progress = 0;
@@ -29,132 +28,221 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 180);
 
-    // ========== 工具函数：创建爆炸粒子 ==========
-    function createBurstParticles(count) {
-        if (!burstContainer) return;
-        burstContainer.innerHTML = '';
-        for (let i = 0; i < count; i++) {
-            const p = document.createElement('div');
-            p.className = 'burst-particle';
-            const angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
-            const distance = 120 + Math.random() * 180;
-            const bx = Math.cos(angle) * distance;
-            const by = Math.sin(angle) * distance;
-            const size = 4 + Math.random() * 6;
-            const delay = Math.random() * 0.15;
-            const duration = 0.7 + Math.random() * 0.5;
-            p.style.cssText = `
-                width: ${size}px; height: ${size}px;
-                --bx: ${bx}px; --by: ${by}px;
-                animation: particleBurst ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s forwards;
-            `;
-            burstContainer.appendChild(p);
-        }
-    }
-
-    // ========== 工具函数：创建背景碎片 ==========
-    function createBgShards(count) {
-        const shardContainer = document.createElement('div');
-        shardContainer.className = 'shard-container';
-        splashScreen.insertBefore(shardContainer, splashScreen.firstChild);
+    // ========== 粒子蜂拥成字核心逻辑 ==========
+    
+    // 使用 Canvas 获取文字像素点作为目标位置
+    function getTextParticleTargets(text, fontSize, fontFamily, letterSpacing) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
         
-        for (let i = 0; i < count; i++) {
-            const s = document.createElement('div');
-            s.className = 'bg-shard';
-            const angle = Math.random() * Math.PI * 2;
-            const dist = 80 + Math.random() * 220;
-            const sx = Math.cos(angle) * dist;
-            const sy = Math.sin(angle) * dist - 100;
-            const size = 6 + Math.random() * 10;
-            const delay = Math.random() * 0.6;
-            const duration = 1.2 + Math.random() * 1.0;
-            const opacity = 0.4 + Math.random() * 0.4;
-            const hue = Math.random() > 0.5 ? 26 : 50;
-            s.style.cssText = `
-                width: ${size}px; height: ${size}px;
-                --sx: ${sx}px; --sy: ${sy}px;
-                background: hsla(${hue}, 90%, 55%, ${opacity});
-                clip-path: polygon(${50 + Math.random()*10}% 0%, 100% ${50 + Math.random()*10}%, ${50 - Math.random()*10}% 100%, 0% ${50 - Math.random()*10}%);
-                animation: bgShardFloat ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s forwards;
-            `;
-            shardContainer.appendChild(s);
+        // 设置字体
+        ctx.font = `900 ${fontSize}px ${fontFamily}`;
+        ctx.textBaseline = 'top';
+        
+        // 测量文字宽度（考虑 letter-spacing）
+        const metrics = ctx.measureText(text);
+        const textWidth = metrics.width + (text.length - 1) * letterSpacing;
+        
+        // 设置 canvas 尺寸
+        canvas.width = Math.ceil(textWidth) + 20;
+        canvas.height = fontSize + 20;
+        
+        // 重新设置字体（canvas 尺寸变化后需要重置）
+        ctx.font = `900 ${fontSize}px ${fontFamily}`;
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = '#fff';
+        
+        // 逐字绘制以处理 letter-spacing
+        let x = 10;
+        for (let i = 0; i < text.length; i++) {
+            ctx.fillText(text[i], x, 10);
+            x += ctx.measureText(text[i]).width + letterSpacing;
         }
         
-        // 清理容器
-        setTimeout(() => shardContainer.remove(), 4000);
+        // 获取像素数据
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+        
+        // 采样非透明像素点作为目标位置
+        const targets = [];
+        const scale = Math.max(1, Math.floor(Math.sqrt(pixels.length / 4 / 800))); // 控制粒子数量 ~800
+        
+        for (let y = 0; y < canvas.height; y += scale) {
+            for (let x = 0; x < canvas.width; x += scale) {
+                const idx = (y * canvas.width + x) * 4 + 3; // alpha 通道
+                if (pixels[idx] > 128) {
+                    // 计算相对于中心的位置
+                    const relX = (x - canvas.width / 2);
+                    const relY = (y - canvas.height / 2);
+                    targets.push({ x: relX, y: relY });
+                }
+            }
+        }
+        
+        return targets;
     }
 
-    // ========== 碎裂重组动画时间线 ==========
-    
-    // Phase 1: 初始状态 - 字母隐藏 (CSS .shattered 类已处理)
-    
-    // Phase 2: 碎片飞出动画 (延迟 100ms 开始，每个字母错开)
-    const letters = document.querySelectorAll('.logo-text .letter');
-    const letterTexts = ['A', 'P', 'E', 'X'];
-    
-    letters.forEach((letter, idx) => {
-        // 设置字母文字内容
-        letter.textContent = letterTexts[idx];
+    // 创建蜂拥粒子
+    function createSwarmParticles() {
+        if (!particleTextContainer) return;
         
-        // 生成随机飞出参数
-        const angle = (Math.PI * 2 * idx) / letters.length + (Math.random() - 0.5) * 0.5;
-        const distance = 180 + Math.random() * 120;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance;
-        const rot = (Math.random() - 0.5) * 720; // -360 到 360 度
+        // 获取容器中心位置
+        const containerRect = particleTextContainer.getBoundingClientRect();
+        const centerX = containerRect.width / 2;
+        const centerY = containerRect.height / 2;
         
-        letter.style.setProperty('--tx', `${tx}px`);
-        letter.style.setProperty('--ty', `${ty}px`);
-        letter.style.setProperty('--rot', `${rot}deg`);
+        // 获取主文字 "APEX" 的目标点
+        const mainTargets = getTextParticleTargets('APEX', 72, '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto', 30);
         
-        // 启动飞出动画
-        setTimeout(() => {
-            letter.style.animation = `shardFlyOut 0.8s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards`;
-            letter.style.opacity = '1';
-        }, 100 + idx * 60);
-    });
-    
-    // Phase 3: 碎片重组飞回 (延迟 1200ms 开始)
-    setTimeout(() => {
-        logoText.classList.remove('shattered');
-        logoText.classList.add('reforming');
+        // 获取副文字 "官方" 的目标点
+        const subTargets = getTextParticleTargets('官方', 24, '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto', 10);
         
-        letters.forEach((letter, idx) => {
-            // 重用相同的飞出参数，反向动画
-            const tx = letter.style.getPropertyValue('--tx');
-            const ty = letter.style.getPropertyValue('--ty');
-            const rot = letter.style.getPropertyValue('--rot');
-            
-            letter.style.setProperty('--tx', tx);
-            letter.style.setProperty('--ty', ty);
-            letter.style.setProperty('--rot', rot);
+        // 合并目标点（副文字位置向下偏移）
+        const allTargets = [
+            ...mainTargets,
+            ...subTargets.map(t => ({ x: t.x, y: t.y + 100 })) // 副文字在主文字下方
+        ];
+        
+        if (allTargets.length === 0) return;
+        
+        // 为每个目标点创建一个粒子
+        allTargets.forEach((target, index) => {
+            // 延迟创建，形成蜂拥效果
+            const delay = Math.random() * 800 + index * 2; // 错开延迟
             
             setTimeout(() => {
-                letter.style.animation = `shardReform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
-                letter.style.opacity = '1';
-            }, idx * 50);
+                const particle = document.createElement('div');
+                particle.className = 'swarm-particle';
+                
+                // 随机起始位置（屏幕四周）
+                const startSide = Math.floor(Math.random() * 4);
+                let startX, startY;
+                const margin = 100;
+                
+                switch (startSide) {
+                    case 0: // 上
+                        startX = Math.random() * window.innerWidth;
+                        startY = -margin;
+                        break;
+                    case 1: // 右
+                        startX = window.innerWidth + margin;
+                        startY = Math.random() * window.innerHeight;
+                        break;
+                    case 2: // 下
+                        startX = Math.random() * window.innerWidth;
+                        startY = window.innerHeight + margin;
+                        break;
+                    case 3: // 左
+                        startX = -margin;
+                        startY = Math.random() * window.innerHeight;
+                        break;
+                }
+                
+                // 计算相对于容器中心的起始位置
+                const relStartX = startX - containerRect.left - centerX;
+                const relStartY = startY - containerRect.top - centerY;
+                
+                // 目标位置
+                const endX = target.x;
+                const endY = target.y;
+                
+                // 随机颜色（粉蓝渐变色系）
+                const colors = ['#ff69b4', '#dda0dd', '#ffb6c1', '#e6d5f5', '#f0e6ff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // 随机大小
+                const size = 3 + Math.random() * 3;
+                
+                // 随机旋转
+                const rot = (Math.random() - 0.5) * 360;
+                
+                // 动画时长
+                const duration = 0.8 + Math.random() * 0.6;
+                
+                particle.style.cssText = `
+                    left: ${centerX}px;
+                    top: ${centerY}px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    --start-x: ${relStartX}px;
+                    --start-y: ${relStartY}px;
+                    --end-x: ${endX}px;
+                    --end-y: ${endY}px;
+                    --rot: ${rot}deg;
+                    animation: swarmFlyIn ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+                    opacity: 1;
+                `;
+                
+                particleTextContainer.appendChild(particle);
+                
+                // 动画结束后移除粒子（但最后一批保留形成文字）
+                if (index < allTargets.length - 50) {
+                    setTimeout(() => {
+                        particle.style.transition = 'opacity 0.3s ease';
+                        particle.style.opacity = '0';
+                        setTimeout(() => particle.remove(), 300);
+                    }, duration * 1000);
+                }
+            }, delay);
         });
         
-        // Phase 4: 发光闪烁 + 粒子爆炸 (重组完成后 300ms)
+        // 所有粒子飞入完成后，显示真实文字
+        const maxDelay = 800 + allTargets.length * 2;
         setTimeout(() => {
-            logoText.classList.remove('reforming');
-            logoText.classList.add('reformed', 'glow-flash');
-            logoGlow.style.animation = 'logoGlow 1.5s ease-out forwards';
-            createBurstParticles(36);
-            createBgShards(28);
-        }, 500);
+            showFinalText();
+        }, maxDelay);
+    }
+    
+    // 显示最终文字
+    function showFinalText() {
+        if (!targetText || !targetSub) return;
         
-        // Phase 5: 副标题淡入
+        // 移除所有粒子
+        const particles = particleTextContainer.querySelectorAll('.swarm-particle');
+        particles.forEach(p => p.style.transition = 'opacity 0.5s ease, transform 0.5s ease');
+        
         setTimeout(() => {
-            logoSub.style.animation = 'fade-in-up 0.8s ease-out 0.2s both, sub-flicker 4s ease-in-out infinite 1s';
-        }, 600);
-        
-        // Phase 6: 扫描光效果
-        setTimeout(() => {
-            logoScan.style.animation = 'logo-scan 2s ease-in-out infinite';
-        }, 800);
-        
-    }, 1200);
+            particles.forEach(p => p.remove());
+            
+            // 显示真实文字（添加类触发动画）
+            targetText.style.display = 'inline-block';
+            targetText.style.animation = 'formText 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+            targetText.style.opacity = '0';
+            
+            targetSub.style.display = 'block';
+            targetSub.style.animation = 'formText 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s forwards';
+            targetSub.style.opacity = '0';
+            
+            // logo-glow 发光效果
+            if (logoGlow) {
+                logoGlow.style.animation = 'logoGlow 1.5s ease-out forwards';
+            }
+            
+            // logo-ring 动画
+            if (logoRing) {
+                logoRing.style.animation = 'pulse-ring 1s ease-out forwards';
+            }
+            
+            // logo-sub 显示
+            if (logoSubDisplay) {
+                logoSubDisplay.style.animation = 'fade-in-up 0.8s ease-out 0.2s both, sub-flicker 4s ease-in-out infinite 1s';
+            }
+            
+            // logo-scan 扫描光
+            if (logoScan) {
+                setTimeout(() => {
+                    logoScan.style.animation = 'logo-scan 2s ease-in-out infinite';
+                }, 500);
+            }
+        }, 100);
+    }
+
+    // ========== 启动粒子蜂拥动画 ==========
+    // 稍微延迟启动，确保布局完成
+    setTimeout(() => {
+        createSwarmParticles();
+    }, 300);
 
     // ========== 开屏动画结束，显示主内容 ==========
     setTimeout(function() {
@@ -163,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
             splashScreen.style.display = 'none';
             mainContent.classList.remove('hidden');
         }, 600);
-    }, 4200);
+    }, 5000); // 稍微延长一点让粒子动画完成
 });
 
 // ========== Toast 提示 ==========

@@ -32,16 +32,14 @@
             <div class="splash-logo">
                 <div class="logo-glow"></div>
                 <div class="logo-ring"></div>
-                <span class="logo-text shattered" data-text="A P E X">
-                    <span class="letter" data-letter="A"></span>
-                    <span class="letter" data-letter="P"></span>
-                    <span class="letter" data-letter="E"></span>
-                    <span class="letter" data-letter="X"></span>
-                </span>
-                <span class="logo-sub">官方</span>
+                <!-- 粒子蜂拥成字容器 -->
+                <div class="particle-text-container" id="particle-text-container">
+                    <!-- 隐藏的目标文字，用于计算粒子目标位置 -->
+                    <span class="target-text" aria-hidden="true">APEX</span>
+                    <span class="target-sub" aria-hidden="true">官方</span>
+                </div>
+                <span class="logo-sub" id="logo-sub-display">官方</span>
                 <div class="logo-scan"></div>
-                <!-- 粒子爆炸容器 -->
-                <div class="burst-container" style="position:absolute;top:50%;left:50%;width:0;height:0;pointer-events:none;"></div>
             </div>
             <div class="splash-loader">
                 <div class="loader-bar">
