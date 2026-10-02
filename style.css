@@ -1072,6 +1072,38 @@ body {
 
 /* 光晕脉冲 */
 .logo-glow {
+/* ===== 粒子蜂拥成字动画 ===== */
+
+.swarm-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ff69b4;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+}
+
+@keyframes swarmFlyIn {
+    0% {
+        opacity: 1;
+        transform: translate(var(--start-x), var(--start-y)) rotate(var(--rot));
+        width: 4px;
+        height: 4px;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--end-x), var(--end-y)) rotate(var(--rot));
+        width: 2px;
+        height: 2px;
+    }
+}
+
+@keyframes formText {
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1265,3 +1297,87 @@ body {
 .logo-text.glow-flash .letter {
     animation: glitchIn 0.6s ease-out forwards, logoGlow 1.5s ease-out 0.6s both;
 }
+
+/* ===== 粒子蜂拥成字动画 ===== */
+
+/* 隐藏的目标文字容器 */
+.target-text {
+    display: none;
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: 30px;
+    background: linear-gradient(90deg, #ff69b4 0%, #dda0dd 50%, #ffb6c1 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.8));
+}
+
+.target-sub {
+    display: none;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 10px;
+    opacity: 0;
+}
+
+/* 蜂拥粒子 */
+.swarm-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+@keyframes swarmFlyIn {
+    0% {
+        transform: translate(var(--start-x), var(--start-y)) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--end-x), var(--end-y)) rotate(var(--rot));
+        opacity: 1;
+    }
+}
+
+@keyframes formText {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Logo ring 脉冲 */
+@keyframes pulse-ring {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+}
+
+/* Particle-text-container 样式 */
+.particle-text-container {
+    position: relative;
+    display: inline-block;
+    min-width: 400px;
+    min-height: 150px;
+    margin-bottom: 40px;
+}
+
