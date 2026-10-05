@@ -1306,12 +1306,10 @@ body {
     font-size: 72px;
     font-weight: 900;
     letter-spacing: 30px;
-    background: linear-gradient(90deg, #ff69b4 0%, #dda0dd 50%, #ffb6c1 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 30px rgba(255, 105, 180, 0.8));
+    -webkit-text-fill-color: var(--primary-color);
+    color: var(--primary-color);
+    text-shadow: 0 0 30px var(--glow-color);
+    background: transparent;
 }
 
 .target-sub {
