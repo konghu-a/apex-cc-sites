@@ -85,6 +85,14 @@ body {
     margin-top: 60px;
 }
 
+.splash-logo .logo-text-simple {
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--primary-color);
+    text-shadow: 0 0 30px var(--glow-color);
+    letter-spacing: 30px;
+}
+
 }
 
 .logo-sub {
@@ -100,6 +108,36 @@ body {
     opacity: 0;
     transform: translateY(20px);
     text-shadow: 0 0 20px var(--glow-color);
+}
+
+.enter-btn {
+    margin-top: 30px;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-color);
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.enter-btn:hover {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+}
+
+.enter-btn:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.enter-btn:active {
+    transform: translateY(1px);
 }
 
 @keyframes logoReveal {
@@ -1074,35 +1112,11 @@ body {
 .logo-glow {
 /* ===== 粒子蜂拥成字动画 ===== */
 
-.swarm-particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #ff69b4;
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0;
-}
+/* .swarm-particle removed for simplified splash */
 
-@keyframes swarmFlyIn {
-    0% {
-        opacity: 1;
-        transform: translate(var(--start-x), var(--start-y)) rotate(var(--rot));
-        width: 4px;
-        height: 4px;
-    }
-    100% {
-        opacity: 0;
-        transform: translate(var(--end-x), var(--end-y)) rotate(var(--rot));
-        width: 2px;
-        height: 2px;
-    }
-}
+/* @keyframes swarmFlyIn removed */
 
-@keyframes formText {
-    0% { opacity: 0; transform: scale(0.5); }
-    100% { opacity: 1; transform: scale(1); }
-}
+/* @keyframes formText removed */
 
     position: absolute;
     top: 50%;
@@ -1301,26 +1315,9 @@ body {
 /* ===== 粒子蜂拥成字动画 ===== */
 
 /* 隐藏的目标文字容器 */
-.target-text {
-    display: none;
-    font-size: 72px;
-    font-weight: 900;
-    letter-spacing: 30px;
-    -webkit-text-fill-color: var(--primary-color);
-    color: var(--primary-color);
-    text-shadow: 0 0 30px var(--glow-color);
-    background: transparent;
-}
+/* .target-text removed */
 
-.target-sub {
-    display: none;
-    font-size: 24px;
-    font-weight: 400;
-    letter-spacing: 10px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 10px;
-    opacity: 0;
-}
+/* .target-sub removed */
 
 /* 蜂拥粒子 */
 .swarm-particle {
@@ -1371,11 +1368,5 @@ body {
 }
 
 /* Particle-text-container 样式 */
-.particle-text-container {
-    position: relative;
-    display: inline-block;
-    min-width: 400px;
-    min-height: 150px;
-    margin-bottom: 40px;
-}
+/* .particle-text-container removed */
 
